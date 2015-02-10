@@ -1,10 +1,8 @@
 from data import load_img
 from utils.encoders import mk_bgbrs, mk_gbr_eval_pts
 from numpy import array
-from numpy.linalg import norm
-from scipy.misc import lena
 
-from models.run_integrator_batch import run_batch
+from utils.batch import run_base_batch
 from models.base_integrator import model
 
 
@@ -45,4 +43,4 @@ kwargs = {'N':[2000],
           'probe_synapse':[0.01]}
 
 if __name__=='__main__':
-    run_batch('./', model, **kwargs)
+    run_base_batch('./', model, **kwargs)
