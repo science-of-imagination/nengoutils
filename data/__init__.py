@@ -1,7 +1,11 @@
-'''
-This module provides functions for loading modeling data.
-'''
+"""This module provides functions for loading modeling data.
 
+Provides:
+mk_gratings -- Generate a set of experimental stimulus gratings.
+grating -- Create a single stimulus grating.
+load_img -- Load a stimulus image.
+load_data -- Load compressed data.
+load_mini_mnist -- Load a portion of the mnist dataset."""
 
 import gzip as gz
 from cPickle import load, dump
@@ -12,21 +16,25 @@ from numpy.linalg import norm
 
 
 def mk_gratings(canvas_size,filename):
-    '''Create stimulus gratings for a square canvas of size canvas_size. Save
-    gratings to filename.
+    """Create and save a set of stimulus gratings.
 
-    Creates gratings at each of the following frequencies (in cycles per
+    Creates stimulus gratings for a square canvas.
+
+    Creates one grating at each of the following frequencies (in cycles per
     width):
     2**3, 2**2, 2, 1, 2**-1, 2**-2, 2**-3.
 
     And in each of the following orientations:
     0, 2*pi/3, 4*pi/3.
 
-    Output is a .pkl.gz (see load_data). The pickle is a list of sub-lists.
-    Each sub-list is a pair [params, grating] where params are the parameters
-    used to create the grating and grating is an array representing the grating
-    in raster format.
-    '''
+    Output is a .pkl.gz (see load_data). The pickle contains a list of
+    sub-lists. Each sub-list is a pair [params, grating] where params are the
+    parameters used to create the grating and grating is an array representing
+    the grating in raster format.
+
+    Keyword arguments:
+    canvas_size -- int, size (in px) of a side of the canvas.
+    filename -- str, path to which output should be saved."""
 
     gratings = []
     lambds = [2**3,2**2,2,1,2**-1,2**-2,2**-3]
@@ -48,9 +56,14 @@ def mk_gratings(canvas_size,filename):
 
 
 def grating(canvas_size, lambd, theta, psi):
-    '''Return a grating of frequency lambda, orientation theta and phase psi
-    on a canvas of size canvas_size.
-    '''
+    """Create and return a stimulus grating.
+
+    Keyword arguments:
+    canvas_size -- int, size (in px) of a side of the canvas.
+    lambd -- float, grating frequency in cycles per canvas width.
+    theta -- float, orientation of the gradient (in rad).
+    psi -- float, phase of the gradient (in rad)."""
+
     x = linspace(-1, 1, canvas_size)
     y = linspace(-1, 1, canvas_size)
     X, Y = meshgrid(x, y)
@@ -65,34 +78,47 @@ def grating(canvas_size, lambd, theta, psi):
     return cosed
 
 
-def load_img(imgpath, dims):
-    """Load the image at image path and return a version scaled to dims
-    represented in the form of an array where a pixel activation of 0 means
-    gray and the entire array is normalized."""
+def load_img(path, dims):
+    """Load the image at path and return an array representing the raster.
 
-    img = Image.open(imgpath).resize(dims).getdata()
+    Flattens image. Shifts pixel activations such that 0 represents gray,
+    normalizes the output array.
+
+    Keyword arguments:
+    path -- str, path of the image to be loaded.
+    dims -- (w, h), where w,h are ints indicating dimensions of the image (in
+        px)."""
+
+    img = Image.open(path).resize(dims).getdata()
     img.convert('L')
     img = subtract(array(img).flatten(), 127.5)
     return img/norm(img)
 
 
 def load_data(filename):
-    """Uncompress, unpickle and return the .pkl.gz file at filename."""
+    """Uncompress, unpickle and return a .pkl.gz file.
+
+    Keyword arguments:
+    filename -- str, a valid file path"""
 
     return load(gz.open(filename))
 
 
 def load_mini_mnist(option=None):
-    """Returns the first 10\% of the images in the mnist dataset, without
-    labels. Pass in 'train', 'valid' or 'test' if you want to load a specific
-    subset of the dataset."""
+    """Load and return the first \%10 of the images in the mnist dataset.
 
-    mmnist = load(gz.open('./data/mini_mnist.pkl.gz', 'rb'))
+    Does not return labels. Pass in 'train', 'valid' or 'test' if you want to
+    load a specific subset of the dataset.
+
+    Keyword arguments:
+    option -- str (default=None)."""
+
+    mini_mnist = load(gz.open('./data/mini_mnist.pkl.gz', 'rb'))
     if option == 'train':
-        return mmnist[0]
+        return mini_mnist[0]
     elif option == 'valid':
-        return mmnist[1]
+        return mini_mnist[1]
     elif option == 'test':
-        return mmnist[2]
+        return mini_mnist[2]
     else:
-        return mmnist
+        return mini_mnist
