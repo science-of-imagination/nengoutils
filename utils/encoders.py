@@ -7,6 +7,9 @@ import warnings
 
 
 def pixel_encoders(canvas_size):
+    """Return a set of encoders for a square image of side length canvas_size
+    that are each sensitive to one pixel of the image. Individual encoders are
+    flattened and normalized arrays."""
     return identity(canvas_size**2)
 
 

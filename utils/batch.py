@@ -4,8 +4,8 @@ import itertools
 import os
 
 
-def run_base_batch(data_path, model, N, input_dim, eval_points, encs, f, stim_func,
-              conn_synapse, probe_synapse, t=0.5):
+def run_base_batch(data_path, model, N, input_dim, eval_points, encs, f,
+                   stim_func, conn_synapse, probe_synapse, t=0.5):
     #Make all parameters lists except t and model
 
     print 'Initializing parameters.'
