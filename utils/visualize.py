@@ -1,4 +1,8 @@
-'''Tools for displaying data.'''
+"""This module provides utilities for displaying data.
+
+Provides:
+mk_imgs -- Creates and saves an image for each data point in a
+    utils.collect.Data object."""
 
 import os
 from numpy import reshape
@@ -11,7 +15,13 @@ def mk_imgs(path, data):
     path.
 
     Warning: If data does not have a specified dims attribute, mk_imgs will
-    fail."""
+    fail.
+
+    Keyword arguments:
+    path -- str, path at which to save data. path must be a path to a
+        directory, save_data generates its own date stamped filename based on
+        data.label.
+    data -- utils.collect.Data object, the data to be saved."""
 
     if not os.path.exists(path):
         os.makedirs(path)
