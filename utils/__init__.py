@@ -7,8 +7,8 @@ analyze -- tools for analyzing data.
 collect -- tools for collecting data.
 visualize -- tools for visualizing data.
 
-Functions:
-compression_svd -- Compresses a set of vectors based on a seed."""
+Functions and classes:
+SVDCompressor -- class, Compresses a set of vectors based on a seed."""
 
 from scipy.sparse.linalg import svds
 from numpy import dot
