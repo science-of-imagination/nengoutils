@@ -1,47 +1,33 @@
-'''Tools for displaying data.'''
+"""This module provides utilities for displaying data.
+
+Provides:
+mk_imgs -- Creates and saves an image for each data point in a
+    utils.collect.Data object."""
 
 import os
-import Image
 from numpy import reshape
-import numpy
-from matplotlib.pyplot import imshow, savefig, axis, figure, close, imsave
+from matplotlib.pyplot import imsave
 
 
-def img_from_vector(vector, dims):
-    v = vector.reshape(dims).astype('uint8')
-    return Image.fromarray(v, 'L')
+def mk_imgs(path, data):
+    """For each data point in collect.Data() object data, create an image
+    representing the data point and save it in a dedicated folder located at
+    path.
 
+    Warning: If data does not have a specified dims attribute, mk_imgs will
+    fail.
 
-def mk_plt_imgs(path, data):
+    Keyword arguments:
+    path -- str, path at which to save data. path must be a path to a
+        directory, save_data generates its own date stamped filename based on
+        data.label.
+    data -- utils.collect.Data object, the data to be saved."""
+
     if not os.path.exists(path):
         os.makedirs(path)
     for i in range(len(data.data)):
         name = path+'%03d.png' % (i+1)
         img = reshape(data.data[i], data.dims, 'F')
         imsave(name, img.T, cmap='gray')
-        #fig = figure(figsize=(data.dims[0],data.dims[1]), frameon=False)
-        #imshow(img.T, cmap='gray', interpolation='nearest')
-        #axis('off')
-        #fig.axes.get_xaxis().set_visible(False)
-        #fig.axes.get_yaxis().set_visible(False)
-        #fig.tight_layout()
-        #savefig(name, bbox_inches='tight', pad_inches=0, dpi=1)
-        #close('all')
         print 'Saved img %d of %d' % (i+1, len(data.data))
     print 'Done.'
-
-    
-def mk_imgs(path, data):
-    if not os.path.exists(path):
-        os.makedirs(path)
-    for i in range(len(data.data)):
-        name = path+'%03d.png' % (i+1)
-        img_from_vector(data.data[i], data.dims).save(name)
-        print 'Saved img %d of %d' % (i+1, len(data.data))
-    avg = sum(data.data)/len(data.data)
-    img_from_vector(avg, data.dims).save(path+'avg.png')
-    print 'Saved average of images.'
-    print 'Done.'
-        
-
-    
