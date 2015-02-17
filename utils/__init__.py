@@ -18,7 +18,9 @@ class SVDCompressor:
     """Compresses and decompresses vectors using SVD."""
 
     def __init__(self, seed, n=600):
-        """
+        """Initialize an SVDCompressor object.
+
+        Computes an SVD compression basis based on seed and n.
 
         Keyword arguments:
         seed -- array_like, the matrix whose SVD will provide the basis vectors
@@ -28,26 +30,38 @@ class SVDCompressor:
         # The basis is U.
         self.basis, S, V = svds(seed.T, k=n)
 
-    def _compress(self, original):
+    def compress(self, original):
+        """Compress original.
+
+        Keyword arguments:
+        original -- array_like, a vector or matrix to be compressed using the
+            encoding computed at initialization."""
+
         return dot(original, self.basis)
 
-    def compress(self, originals):
-        """Compress the contents of targets.
+    def compress_many(self, originals):
+        """Compress the contents of originals.
 
         Keyword arguments:
         originals -- iterable, a collection of vectors or matrices to be
             compressed using the encoding computed at initialization."""
 
-        return map(self._compress, originals)
+        return map(self.compress, originals)
 
-    def _decompress(self, compressed):
+    def decompress(self, compressed):
+        """Decompress compressed.
+
+        Keyword arguments:
+        compressed -- array_like, a vector or matrix to be decompressed using
+            the encoding computed at initialization."""
+
         return dot(self.basis, compressed.T).T
 
-    def decompress(self, compresseds):
+    def decompress_many(self, compresseds):
         """Decompress the contents of compresseds.
 
         Keyword arguments:
         compresseds -- iterable, a collection of vectors or matrices to be
             decompressed using the encoding computed at initialization."""
 
-        return map(self._decompress, compresseds)
+        return map(self.decompress, compresseds)
