@@ -27,7 +27,6 @@ class SVDCompressor:
             for compression.
         n -- int (default=600), number of """
 
-        # The basis is U.
         self.basis, S, V = svds(seed.T, k=n)
 
     def compress(self, original):
