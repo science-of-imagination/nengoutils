@@ -22,7 +22,7 @@ def run_base_batch(data_path, model, N, input_dim, eval_points, encs, f,
         print 'Saving data.'
         save_data(data_path,
                   Data(label=os.path.basename(__file__).strip('.py').strip('.pyc'),
-                       params=param,
+                       #params=param,
                        data=array([opt for opt in sim.data[probe]])))
         print 'Simulation finished.'
 
