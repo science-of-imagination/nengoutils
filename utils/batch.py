@@ -12,6 +12,7 @@ def run_base_batch(data_path, model, N, input_dim, eval_points, encs, f,
     input_dim = [x**2 for x in input_dim] 
     paramses = itertools.product(N, input_dim, eval_points, stim_func,
                                  conn_synapse, probe_synapse)
+    datalist = []
     for param in paramses:
         param = list(param)
         param.insert(2, encs(param[0], sqrt(param[1]), f))
@@ -20,9 +21,10 @@ def run_base_batch(data_path, model, N, input_dim, eval_points, encs, f,
         sim.run(t)
 
         print 'Saving data.'
-        save_data(data_path,
-                  Data(label=os.path.basename(__file__).strip('.py').strip('.pyc'),
+        datalist.append(Data(label=os.path.basename(__file__).strip('.py').strip('.pyc'),
                        #params=param,
-                       data=array([opt for opt in sim.data[probe]])))
+                       data=array([opt for opt in sim.data[probe]]))))
         print 'Simulation finished.'
+    return datalist
+
 
