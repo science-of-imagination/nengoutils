@@ -1,5 +1,5 @@
 from numpy import array, sqrt
-from utils.collect import Data, save_data
+from utils.collect import Data
 import itertools
 import os
 
@@ -22,8 +22,8 @@ def run_base_batch(data_path, model, N, input_dim, eval_points, encs, f,
 
         print 'Saving data.'
         datalist.append(Data(label=os.path.basename(__file__).strip('.py').strip('.pyc'),
-                       #params=param,
-                       data=array([opt for opt in sim.data[probe]]))))
+                       params=param,
+                       data=array([opt for opt in sim.data[probe]])))
         print 'Simulation finished.'
     return datalist
 

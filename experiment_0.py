@@ -4,6 +4,7 @@ from numpy import array
 
 from utils.batch import run_base_batch
 from models.base_integrator import model
+from utils.collect import save_data
 
 
 # dimensions of the sides of the simulation canvas.
@@ -69,4 +70,8 @@ kwargs = {'n': [2000],
 
 
 if __name__ == '__main__':
-    run_base_batch('./', model, **kwargs)
+    datalist = run_base_batch('./', model, **kwargs)
+    for data in datalist:
+        del data.params
+        data.dims = (dim, dim)
+        save_data('./', data)
