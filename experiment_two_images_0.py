@@ -12,7 +12,15 @@ from models.base_integrator import model
 from utils.collect import save_data
 
 
-dim=78
+class Enc:
+    def __init__(self, new_every=True):
+        self.new_every = new_every
+        self.encs = None
+
+    def __call__(self, N, dim, f):
+        if (not self.new_every and self.encs==None) or self.new_every:
+            self.encs = array(mk_bgbrs(N/2, (dim,dim), f))
+        return self.encs
 
 def mk_half_gratings(dim,lambd,theta,psi):
     #do it...
@@ -24,6 +32,9 @@ def mk_half_gratings(dim,lambd,theta,psi):
     return [np.append(gs[0],np.zeros((dim,dim/2)),1),np.append(np.zeros((dim,dim/2)),gs[1],1)]
 
 
+
+
+dim=78
 
 
 #image stuff
@@ -49,15 +60,7 @@ def stim_func(t):
         return [0 for _ in range(len(img1))]
 
 
-class Enc:
-    def __init__(self, new_every=True):
-        self.new_every = new_every
-        self.encs = None
 
-    def __call__(self, N, dim, f):
-        if (not self.new_every and self.encs==None) or self.new_every:
-            self.encs = array(mk_bgbrs(N/2, (dim,dim), f))
-        return self.encs
 
 print 'Initializing eval points.'
 eval_points = mk_gbr_eval_pts(500, dim)

@@ -9,7 +9,7 @@ from numpy import reshape
 from matplotlib.pyplot import imsave
 
 
-def mk_imgs(path, data):
+def mk_imgs(path, data, dims):
     """For each data point in collect.Data() object data, create an image
     representing the data point and save it in a dedicated folder located at
     path.
@@ -25,9 +25,9 @@ def mk_imgs(path, data):
 
     if not os.path.exists(path):
         os.makedirs(path)
-    for i in range(len(data.data)):
+    for i in range(len(data)):
         name = path+'%03d.png' % (i+1)
-        img = reshape(data.data[i], data.dims, 'F')
+        img = reshape(data[i], dims, 'F')
         imsave(name, img.T, cmap='gray')
-        print 'Saved img %d of %d' % (i+1, len(data.data))
+        print 'Saved img %d of %d' % (i+1, len(data))
     print 'Done.'

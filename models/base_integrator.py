@@ -42,8 +42,10 @@ def model(n, input_dims, encs, eval_points, stim_func, conn_synapse=0.1,
         nengo.Connection(ipt, ens, synapse=None, transform=1)
         conn = nengo.Connection(ens, ens, synapse=conn_synapse)
 
-        probe = nengo.Probe(ens, attr='decoded_output',
+        i_probe = nengo.Probe(ipt, attr='output',
+                    synapse=None)
+        o_probe = nengo.Probe(ens, attr='decoded_output',
                             synapse=probe_synapse)
     
     print 'Building simulation.'    
-    return nengo.Simulator(net), probe
+    return nengo.Simulator(net), i_probe, o_probe
