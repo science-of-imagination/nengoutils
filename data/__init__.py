@@ -9,7 +9,7 @@ load_mini_mnist -- Load a portion of the mnist dataset."""
 
 import gzip as gz
 from cPickle import load, dump
-import Image
+from PIL import Image
 from numpy import array, subtract, meshgrid, linspace, cos, sin, pi
 from numpy.random import uniform
 from numpy.linalg import norm

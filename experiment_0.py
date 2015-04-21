@@ -55,10 +55,10 @@ class Enc:
 
 
 print 'Initializing eval points.'
-eval_points = mk_gbr_eval_pts(500, dim)
+eval_points = mk_gbr_eval_pts(100, dim)
 
 
-kwargs = {'n': [2000],
+kwargs = {'N': [1000],
           'input_dim': [dim],
           'eval_points': [eval_points],
           'encs': Enc(),
