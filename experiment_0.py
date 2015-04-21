@@ -14,6 +14,7 @@ dim = 78
 img = load_img('./data/lena_512x512.png', (dim, dim))
 
 
+
 # a stimulus function.
 def stim_func(t):
 
@@ -22,6 +23,8 @@ def stim_func(t):
     else:
         return [0 for _ in range(len(img))]
 
+#pair list for the above stimulus function
+stim_func_pairs=[[0.1, img], [1.0, [0 for _ in range(len(img))]]]
 
 class Enc:
     """A class that generates encoders for every simulation run, or one for
@@ -55,17 +58,20 @@ class Enc:
 
 
 print 'Initializing eval points.'
-eval_points = mk_gbr_eval_pts(500, dim)
+eval_points = mk_gbr_eval_pts(100, dim)
 
 
-kwargs = {'n': [2000],
+kwargs = {'N': [100],
           'input_dim': [dim],
           'eval_points': [eval_points],
           'encs': Enc(),
           'f': 4,
-          'stim_func': [stim_func],
+          'stim_func_pairs': [stim_func_pairs],
           'conn_synapse': [0.1],
           'probe_synapse': [0.01]}
+
+#For debugging          
+#args = [100, dim**2, kwargs['encs'](100, 78, 4), eval_points, None, 0.1, 0.01]
 
 
 if __name__ == '__main__':
