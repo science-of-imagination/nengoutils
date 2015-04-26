@@ -9,11 +9,13 @@ load_mini_mnist -- Load a portion of the mnist dataset."""
 
 import gzip as gz
 from cPickle import load, dump
-from PIL import Image
+try:
+    import Image
+except ImportError:
+    from PIL import Image
 from numpy import array, subtract, meshgrid, linspace, cos, sin, pi
 from numpy.random import uniform
 from numpy.linalg import norm
-
 
 def mk_gratings(canvas_size,filename):
     """Create and save a set of stimulus gratings.

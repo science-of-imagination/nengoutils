@@ -16,7 +16,6 @@ img = load_img('./data/lena_512x512.png', (dim, dim))
 
 # a stimulus function.
 def stim_func(t):
-
     if t < 0.1:
         return img
     else:
