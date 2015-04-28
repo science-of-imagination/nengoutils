@@ -17,7 +17,6 @@ img = load_img('./data/lena_512x512.png', (dim, dim))
 
 # a stimulus function.
 def stim_func(t):
-
     if t < 0.1:
         return img
     else:
@@ -61,7 +60,8 @@ print 'Initializing eval points.'
 eval_points = mk_gbr_eval_pts(100, dim)
 
 
-kwargs = {'N': [100],
+
+kwargs = {'N': [1000],
           'input_dim': [dim],
           'eval_points': [eval_points],
           'encs': Enc(),

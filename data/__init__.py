@@ -17,7 +17,6 @@ from numpy import array, subtract, meshgrid, linspace, cos, sin, pi
 from numpy.random import uniform
 from numpy.linalg import norm
 
-
 def mk_gratings(canvas_size,filename):
     """Create and save a set of stimulus gratings.
 

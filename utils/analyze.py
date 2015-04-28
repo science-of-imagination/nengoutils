@@ -22,6 +22,15 @@ def cosine(u, v):
 
     return dot(u, v)/(norm(u)*norm(v))
 
+def cosines(data, v):
+    """Compute and return cosine of the angle between vectors in data and v.
+
+    Keyword arguments:
+    data -- array_like, an collection of vectors.
+    v -- array_like, the vector to compare to."""
+    return [cosine(u, v) for u in data]
+        
+
 def rmsd(u, v):
     """Return the root mean square of the difference between vectors u, v.
 
