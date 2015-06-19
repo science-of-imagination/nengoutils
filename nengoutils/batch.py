@@ -1,6 +1,6 @@
 from numpy import array, sqrt
-from utils.collect import Data, save_data
-from utils import gen_stim_func
+from nengoutils.collect import Data, save_data
+from nengoutils import gen_stim_func
 import itertools
 import os
 

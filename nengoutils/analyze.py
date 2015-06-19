@@ -4,9 +4,6 @@ Provides:
 cosine -- Computes the cosine of the angle between two vectors.
 rmsd -- Computes the root mean square of the difference of two vectors.
 """
-from tkFileDialog import askopenfilenames
-from pylab import plot, show
-from data import load_data
 from numpy import dot, mean, sqrt, subtract
 from numpy.linalg import norm
 
